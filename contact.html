@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tenuel — Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="PROJECT.css"/>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="bg-grid"></div>
+
+  <nav>
+    <a class="logo" href="index.html"><span>T</span>enuel</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Project</a></li>
+      <li><a href="service.html">Service</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="page-inner">
+
+      <div class="section-tag">Get In Touch</div>
+      <div class="section-title">Contact</div>
+      <div class="section-div"></div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>I'm open to internship opportunities, freelance projects, and collaborations. Whether you have a project in mind or just want to say hi — my inbox is always open.</p>
+
+          <div class="contact-methods">
+            <a href="mailto:samuelmwa790@gmail.com" class="contact-method">
+              <div class="cm-icon">✉️</div>
+              <div><div class="cm-label">Email</div><div class="cm-val">amine@example.com</div></div>
+            </a>
+            <a href="#" class="contact-method">
+              <div class="cm-icon">💼</div>
+              <div><div class="cm-label">LinkedIn</div><div class="cm-val">linkedin.com/in/amine</div></div>
+            </a>
+            <a href="#" class="contact-method">
+              <div class="cm-icon">🐙</div>
+              <div><div class="cm-label">GitHub</div><div class="cm-val">github.com/amine</div></div>
+            </a>
+          </div>
+
+          <div class="social-strip">
+            <a class="social-btn" title="Twitter">𝕏</a>
+            <a class="social-btn" title="LinkedIn">in</a>
+            <a class="social-btn" title="GitHub">⌥</a>
+            <a class="social-btn" title="Discord">◈</a>
+          </div>
+
+          <p style="margin-top:1.8rem;font-size:.82rem;color:var(--muted2)">⚡ Usually responds within 24 hours</p>
+        </div>
+
+        <div class="contact-form">
+          <div class="form-title">Send a Message</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="John"/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Kamau"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="johnKamau@example.com"/>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select>
+              <option>Project Inquiry</option>
+              <option>Freelance Work</option>
+              <option>Collaboration</option>
+              <option>Just Saying Hi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project or idea..."></textarea>
+          </div>
+          <button class="btn-submit" id="send-btn">Send Message ✦</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer>
+    <p>© 2026 Tenuel — Built with passion &amp; caffeine ☕ &nbsp;|&nbsp; All rights reserved</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

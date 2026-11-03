@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>DarkPrep • Laikipia Study Vault</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+
+    body {
+      min-height: 100vh;
+      background: url('C:\Users\pc\.vscode\cli\.vscode\background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* dark overlay for readability (changes intensity based on mode) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      z-index: 0;
+      transition: background-color 0.25s;
+    }
+
+    /* light-mode overlay adjustment */
+    body.light-mode::before {
+      background-color: rgba(255, 248, 235, 0.65);
+    }
+
+    /* main container with backdrop blur and adaptive colors */
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      border-radius: 2.5rem;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.3);
+      padding: 1.8rem 2rem 2.5rem;
+      transition: background 0.2s, backdrop-filter 0.2s;
+    }
+
+    /* dark mode specific container */
+    body.dark .app-container {
+      background: rgba(10, 20, 30, 0.75);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.5);
+    }
+
+    body.light-mode .app-container {
+      background: rgba(245, 245, 250, 0.75);
+      backdrop-filter: blur(12px);
+    }
+
+    /* header area */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 3px solid rgba(30, 60, 114, 0.6);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    body.dark .hero {
+      border-bottom-color: rgba(100, 150, 200, 0.7);
+    }
+
+    .title-section h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b2b44, #2c6e9e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    body.dark .title-section h1 {
+      background: linear-gradient(135deg, #c0e0ff, #7bb3e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .title-section p {
+      font-weight: 500;
+      color: #1e2f3f;
+    }
+
+    body.dark .title-section p {
+      color: #cfdfef;
+    }
+
+    .exam-badge {
+      background: #c4450c;
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* mode toggle button */
+    .mode-toggle {
+      background: rgba(30, 40, 55, 0.7);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 40px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: white;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      margin-left: 1rem;
+    }
+
+    body.light-mode .mode-toggle {
+      background: rgba(0, 0, 0, 0.2);
+      color: #1e2f3f;
+    }
+
+    .mode-toggle:hover {
+      transform: scale(0.96);
+      background: #2c5a8c;
+      color: white;
+    }
+
+    .stats-ribbon {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.6rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark .stats-ribbon {
+      background: rgba(20, 30, 45, 0.85);
+      color: #eef2ff;
+    }
+
+    .days-left {
+      background: #0f2e44;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      color: #f0f7ff;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    body.dark .days-left {
+      background: #1e4a6e;
+      color: #f0fcff;
+    }
+
+    .study-stats {
+      display: flex;
+      gap: 1.8rem;
+      font-weight: 600;
+    }
+
+    .reset-btn {
+      background: none;
+      border: 2px solid #2c5a8c;
+      padding: 0.4rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    body.dark .reset-btn {
+      border-color: #7da5cf;
+      color: #eaf4ff;
+    }
+
+    .reset-btn:hover {
+      background: #2c5a8c;
+      color: white;
+    }
+
+    /* timetable grid */
+    .timetable-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin: 1.8rem 0 1rem;
+    }
+
+    .day-card {
+      border-radius: 1.8rem;
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark .day-card {
+      background: rgba(20, 30, 44, 0.85);
+      border: 1px solid rgba(80, 120, 160, 0.4);
+    }
+
+    .day-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1rem 1.5rem;
+      background: rgba(248, 250, 253, 0.7);
+      border-left: 8px solid #2c6e9e;
+      border-radius: 1.8rem 1.8rem 0 0;
+    }
+
+    body.dark .day-header {
+      background: rgba(30, 45, 65, 0.7);
+      border-left-color: #5f9ed3;
+    }
+
+    .day-name {
+      font-weight: 800;
+      font-size: 1.35rem;
+    }
+
+    .day-date {
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.08);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+    }
+
+    body.dark .day-date {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .progress-badge {
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .sessions-list {
+      padding: 0.8rem 1.2rem 1.2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .session-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 1.2rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .session-item {
+      background: rgba(35, 50, 70, 0.7);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .session-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: baseline;
+      flex: 2;
+    }
+
+    .session-time {
+      font-weight: 700;
+      background: #eef3fc;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      color: #1e5b9e;
+    }
+
+    body.dark .session-time {
+      background: #1e3b5a;
+      color: #c7e2ff;
+    }
+
+    .session-title {
+      font-weight: 700;
+      color: #1e2f3f;
+    }
+
+    body.dark .session-title {
+      color: #eef3ff;
+    }
+
+    .session-desc {
+      font-size: 0.85rem;
+      color: #4a627a;
+    }
+
+    body.dark .session-desc {
+      color: #bdd4ec;
+    }
+
+    .task-check {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .check-btn {
+      background: #eef2f7;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    body.dark .check-btn {
+      background: #2a405c;
+      color: white;
+    }
+
+    .check-btn.completed {
+      background: #2b7a4b;
+      color: white;
+    }
+
+    .edit-note {
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    /* modal dark adaptation */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 2rem;
+      padding: 1.5rem;
+    }
+
+    body.dark .modal-card {
+      background: #1e2a3a;
+      color: #f0f4fa;
+    }
+
+    @media (max-width: 700px) {
+      .app-container {
+        padding: 1rem;
+      }
+      .session-info {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body class="light-mode">
+<div class="app-container">
+  <div class="hero">
+    <div class="title-section">
+      <h1>📖 Dark/ Light Study Forge · Laikipia</h1>
+      <p>Bsc.Comp.Sc. 2nd Year | intense prep mode — exams start April 17, 2026</p>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <button id="darkModeToggleBtn" class="mode-toggle">🌙 Dark Mode</button>
+      <div class="exam-badge">
+        <span>⏳</span> COUNTDOWN
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-ribbon">
+    <div class="days-left" id="countdownDisplay">📅 Loading countdown...</div>
+    <div class="study-stats">
+      <span>✅ <span id="totalCompleted">0</span> / <span id="totalTasks">0</span> tasks done</span>
+      <button class="reset-btn" id="resetProgressBtn">⟳ Reset progress</button>
+    </div>
+  </div>
+
+  <div id="timetableContainer" class="timetable-grid"></div>
+  <footer>⚡ Click ✓ to mark session complete · 📝 edit notes for each block · Background: serene library vibe + adaptive dark/light magic</footer>
+</div>
+
+<div id="noteModal" class="modal">
+  <div class="modal-card">
+    <h3>✏️ Custom study note</h3>
+    <textarea id="modalNoteText" rows="3" placeholder="e.g., Focus on AVL trees, TCP/IP review..."></textarea>
+    <div class="modal-buttons" style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem;">
+      <button id="closeModalBtn" style="background:#ddd; border:none; padding:6px 14px; border-radius: 30px;">Cancel</button>
+      <button id="saveNoteBtn" style="background:#1e5b9e; color:white; border:none; padding:6px 14px; border-radius:30px;">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- fixed exam dates ----
+  const EXAM_START = new Date(2026, 3, 17);
+  const START_DATE = new Date(2026, 3, 7);
+  const END_DATE = new Date(2026, 3, 16);
+
+  const SUBJECTS = [
+    { code: "COMP 225", name: "Data Structures & Algorithms" },
+    { code: "COMP 221", name: "Automata Theory" },
+    { code: "COMP 222", name: "Assembly Language Programming" },
+    { code: "COMP 223/BICT 326", name: "Intro to Artificial Intelligence" },
+    { code: "COMP 224", name: "Internet of Things (IoT)" },
+    { code: "COMP 226/BICT 221", name: "Computer Networks" },
+    { code: "COMP 227", name: "Object Oriented Programming" }
+  ];
+
+  function getSubjectByIndex(i) {
+    return SUBJECTS[i % SUBJECTS.length];
+  }
+
+  function generateSessionsForDate(date) {
+    const dayOfWeek = date.getDay();
+    const dateStr = date.toISOString().split('T')[0];
+    const dayIndex = Math.floor((date - START_DATE) / (1000 * 3600 * 24));
+    const subjAM = getSubjectByIndex(dayIndex);
+    const subjPM = getSubjectByIndex(dayIndex + 3);
+    const sessions = [];
+
+    sessions.push({
+      id: `${dateStr}_am`,
+      timeSlot: "09:00 – 11:30",
+      title: `${subjAM.name} (${subjAM.code})`,
+      description: "Core reading & problem sets",
+      completed: false,
+      note: ""
+    });
+    sessions.push({
+      id: `${dateStr}_pm`,
+      timeSlot: "14:30 – 17:00",
+      title: `${subjPM.name} (${subjPM.code})`,
+      description: "Hands-on + past paper drills",
+      completed: false,
+      note: ""
+    });
+    if (dayOfWeek === 2 || dayOfWeek === 4) {
+      const subjEve = getSubjectByIndex(dayIndex + 5);
+      sessions.push({
+        id: `${dateStr}_eve`,
+        timeSlot: "19:00 – 20:30",
+        title: `⚡ Rapid Review: ${subjEve.name}`,
+        description: "Flashcards & concept maps",
+        completed: false,
+        note: ""
+      });
+    }
+    if (dayOfWeek === 6 || dayOfWeek === 0) {
+      sessions.push({
+        id: `${dateStr}_prac`,
+        timeSlot: "10:30 – 12:30 (weekend lab)",
+        title: `💻 Coding Lab: ${subjAM.name}`,
+        description: "Implement algorithms / IoT sim",
+        completed: false,
+        note: ""
+      });
+    }
+    return sessions;
+  }
+
+  function getAllStudyDays() {
+    const days = [];
+    let current = new Date(START_DATE);
+    while (current <= END_DATE) {
+      days.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+    return days;
+  }
+
+  function formatDateDisplay(date) {
+    return date.toLocaleDateString('en-GB', { weekday: 'long', month: 'short', day: 'numeric' });
+  }
+
+  const STORAGE_KEY = "laikipia_timetable_dark_v2";
+
+  function loadTimetableData() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (parsed.days && Array.isArray(parsed.days)) return parsed;
+      } catch(e) {}
+    }
+    const daysData = [];
+    const studyDays = getAllStudyDays();
+    for (let day of studyDays) {
+      const sessions = generateSessionsForDate(day);
+      daysData.push({
+        date: day.toISOString(),
+        dateLabel: formatDateDisplay(day),
+        sessions: sessions
+      });
+    }
+    return { days: daysData };
+  }
+
+  let timetableState = loadTimetableData();
+
+  function getStats() {
+    let total = 0, completed = 0;
+    for (let day of timetableState.days) {
+      for (let sess of day.sessions) {
+        total++;
+        if (sess.completed) completed++;
+      }
+    }
+    return { total, completed };
+  }
+
+  function updateStatsUI() {
+    const { total, completed } = getStats();
+    document.getElementById('totalCompleted').innerText = completed;
+    document.getElementById('totalTasks').innerText = total;
+  }
+
+  // COUNTDOWN real-time
+  let countdownInterval = null;
+  function updateCountdown() {
+    const now = new Date();
+    const examDate = new Date(EXAM_START);
+    examDate.setHours(0, 0, 0, 0);
+    const diffMs = examDate - now;
+    const countdownEl = document.getElementById('countdownDisplay');
+    if (diffMs <= 0) {
+      countdownEl.innerHTML = "🚨 EXAMS STARTED! Give your best! 🚨";
+      return;
+    }
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    let text = `⏰ ${days}d ${hours}h ${minutes}m ${seconds}s until exams (Apr 17)`;
+    if (days < 3) text = `🔥 CRUNCH MODE: ${days}d ${hours}h ${minutes}m ${seconds}s left 🔥`;
+    countdownEl.innerHTML = text;
+  }
+
+  function startCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    updateCountdown();
+    countdownInterval = setInterval(updateCountdown, 1000);
+  }
+
+  function renderTimetable() {
+    const container = document.getElementById('timetableContainer');
+    container.innerHTML = '';
+    for (let dayIdx = 0; dayIdx < timetableState.days.length; dayIdx++) {
+      const dayData = timetableState.days[dayIdx];
+      const dayDateObj = new Date(dayData.date);
+      const dayCard = document.createElement('div');
+      dayCard.className = 'day-card';
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'day-header';
+      const leftInfo = document.createElement('div');
+      leftInfo.style.display = 'flex';
+      leftInfo.style.flexWrap = 'wrap';
+      leftInfo.style.gap = '0.8rem';
+      leftInfo.style.alignItems = 'center';
+      leftInfo.innerHTML = `
+        <div class="day-name">📌 ${dayData.dateLabel}</div>
+        <div class="day-date">${dayDateObj.toLocaleDateString()}</div>
+      `;
+      const sessionCount = dayData.sessions.length;
+      const completedCount = dayData.sessions.filter(s => s.completed).length;
+      const progressSpan = document.createElement('div');
+      progressSpan.className = 'progress-badge';
+      progressSpan.innerText = `✅ ${completedCount}/${sessionCount} done`;
+      headerDiv.appendChild(leftInfo);
+      headerDiv.appendChild(progressSpan);
+      const sessionsContainer = document.createElement('div');
+      sessionsContainer.className = 'sessions-list';
+      for (let sess of dayData.sessions) {
+        const sessionDiv = document.createElement('div');
+        sessionDiv.className = 'session-item';
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'session-info';
+        const noteHtml = sess.note ? `<span class="session-desc" style="background: rgba(0,0,0,0.05); padding:0.1rem 0.5rem; border-radius:30px;">📌 ${sess.note.substring(0, 38)}${sess.note.length>38?'…':''}</span>` : '';
+        infoDiv.innerHTML = `
+          <span class="session-time">${sess.timeSlot}</span>
+          <span class="session-title">${sess.title}</span>
+          <span class="session-desc">${sess.description}</span>
+          ${noteHtml}
+        `;
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'task-check';
+        const checkBtn = document.createElement('button');
+        checkBtn.innerText = sess.completed ? '✓' : '○';
+        checkBtn.classList.add('check-btn');
+        if (sess.completed) checkBtn.classList.add('completed');
+        checkBtn.addEventListener('click', () => {
+          sess.completed = !sess.completed;
+          if (sess.completed) {
+            checkBtn.innerText = '✓';
+            checkBtn.classList.add('completed');
+          } else {
+            checkBtn.innerText = '○';
+            checkBtn.classList.remove('completed');
+          }
+          const newCompleted = dayData.sessions.filter(s => s.completed).length;
+          progressSpan.innerText = `✅ ${newCompleted}/${sessionCount} done`;
+          updateStatsUI();
+          saveToLocal();
+        });
+        const noteEditBtn = document.createElement('button');
+        noteEditBtn.innerHTML = '📝';
+        noteEditBtn.classList.add('edit-note');
+        noteEditBtn.addEventListener('click', () => openNoteModal(sess, dayIdx));
+        taskDiv.appendChild(checkBtn);
+        taskDiv.appendChild(noteEditBtn);
+        sessionDiv.appendChild(infoDiv);
+        sessionDiv.appendChild(taskDiv);
+        sessionsContainer.appendChild(sessionDiv);
+      }
+      dayCard.appendChild(headerDiv);
+      dayCard.appendChild(sessionsContainer);
+      container.appendChild(dayCard);
+    }
+    updateStatsUI();
+    updateCountdown();
+  }
+
+  let currentEditSession = null;
+  let currentDayIdx = null;
+  function openNoteModal(session, dayIdx) {
+    currentEditSession = session;
+    currentDayIdx = dayIdx;
+    const modal = document.getElementById('noteModal');
+    document.getElementById('modalNoteText').value = session.note || '';
+    modal.style.display = 'flex';
+  }
+  function closeModal() {
+    document.getElementById('noteModal').style.display = 'none';
+    currentEditSession = null;
+  }
+  function saveNoteModal() {
+    if (currentEditSession) {
+      const newNote = document.getElementById('modalNoteText').value;
+      currentEditSession.note = newNote;
+      saveToLocal();
+      renderTimetable();
+    }
+    closeModal();
+  }
+
+  function saveToLocal() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(timetableState));
+  }
+
+  function resetAllProgress() {
+    if (confirm("⚠️ Reset all study checkmarks & notes? This clears your progress.")) {
+      for (let day of timetableState.days) {
+        for (let sess of day.sessions) {
+          sess.completed = false;
+          sess.note = "";
+        }
+      }
+      saveToLocal();
+      renderTimetable();
+    }
+  }
+
+  // DARK MODE TOGGLE + background adapt + class
+  function initDarkMode() {
+    const savedTheme = localStorage.getItem('laikipia_theme');
+    const body = document.body;
+    if (savedTheme === 'dark') {
+      body.classList.remove('light-mode');
+      body.classList.add('dark');
+      document.getElementById('darkModeToggleBtn').innerHTML = '☀️ Light Mode';
+    } else {
+      body.classList.add('light-mode');
+      body.classList.remove('dark');
+      document.getElementById('darkModeToggleBtn').innerHTML = '🌙 Dark Mode';
+    }
+  }
+
+  function toggleDarkMode() {
+    const body = document.body;
+    if (body.classList.contains('dark')) {
+      body.classList.remove('dark');
+      body.classList.add('light-mode');
+      localStorage.setItem('laikipia_theme', 'light');
+      document.getElementById('darkModeToggleBtn').innerHTML = '🌙 Dark Mode';
+    } else {
+      body.classList.remove('light-mode');
+      body.classList.add('dark');
+      localStorage.setItem('laikipia_theme', 'dark');
+      document.getElementById('darkModeToggleBtn').innerHTML = '☀️ Light Mode';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initDarkMode();
+    renderTimetable();
+    startCountdown();
+    document.getElementById('resetProgressBtn').addEventListener('click', resetAllProgress);
+    document.getElementById('darkModeToggleBtn').addEventListener('click', toggleDarkMode);
+    const modal = document.getElementById('noteModal');
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('saveNoteBtn').addEventListener('click', saveNoteModal);
+    window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  });
+</script>
+</body>
+</html>

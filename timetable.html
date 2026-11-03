@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TENUEL Timetable</title>
+<link rel="stylesheet" href="timetable.css">
+</head>
+<body>
+<div class="box">
+<!-- Loader -->
+<div id="loader">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+</div>
+
+<!-- Main Content -->
+<div class="container" id="mainContent">
+    <h1 id="animatedName"></h1>
+
+    <h2>Daily Timetable</h2>
+    <table>
+        <tr><th>Activity</th><th>Action</th></tr>
+        <tr><td>Wake Up</td><td><button onclick="toggleActivity('wake')">Start</button></td></tr>
+        <tr><td>Study</td><td><button onclick="toggleActivity('study')">Start</button></td></tr>
+        <tr><td>Free Time</td><td><button onclick="toggleActivity('free')">Start</button></td></tr>
+        <tr><td>Sleep</td><td><button onclick="toggleActivity('sleep')">Start</button></td></tr>
+        <tr><td>P.E</td><td><button onclick="toggleActivity('pe')">Start</button></td></tr>
+    </table>
+
+    <p id="result">Activity Log: None</p>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
+        <canvas id="timeGraph" width="300" height="200"></canvas>
+        <canvas id="pieChart" width="300" height="200"></canvas>
+    </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="timetable.js"></script>
+</body>
+</html>

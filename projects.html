@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tenuel — Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="PROJECT.css"/>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="bg-grid"></div>
+
+  <nav>
+    <a class="logo" href="index.html"><span>T</span>enuel</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Project</a></li>
+      <li><a href="service.html">Service</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="page-inner">
+
+      <div class="section-tag">What I've Built</div>
+      <div class="section-title">Projects</div>
+      <div class="section-div"></div>
+
+      <div class="projects-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web App</button>
+        <button class="filter-btn" data-filter="ai">AI</button>
+        <button class="filter-btn" data-filter="tool">Tools</button>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="project-card" data-cat="web">
+          <div class="featured-badge">⭐ Featured</div>
+          <div class="project-header">
+            <div class="project-icon">🌐</div>
+            <div class="project-links">
+              <a class="plink" title="GitHub">⌥</a>
+              <a class="plink" title="Live">↗</a>
+            </div>
+          </div>
+          <div class="project-tag-badge">Web App</div>
+          <div class="project-name">DevConnect Platform</div>
+          <p class="project-desc">A collaborative platform for developers to share projects, get feedback, and connect with peers in real-time using live chat and notifications.</p>
+          <div class="project-techs">
+            <span class="tech">React</span><span class="tech">Node.js</span>
+            <span class="tech">MongoDB</span><span class="tech">Socket.io</span><span class="tech">JWT</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="ai">
+          <div class="project-header">
+            <div class="project-icon">🤖</div>
+            <div class="project-links"><a class="plink">⌥</a><a class="plink">↗</a></div>
+          </div>
+          <div class="project-tag-badge">AI Tool</div>
+          <div class="project-name">Smart Resume Analyzer</div>
+          <p class="project-desc">AI-powered tool that analyzes resumes and provides tailored improvement suggestions based on job descriptions and market trends.</p>
+          <div class="project-techs">
+            <span class="tech">Python</span><span class="tech">FastAPI</span>
+            <span class="tech">OpenAI</span><span class="tech">React</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="web">
+          <div class="project-header">
+            <div class="project-icon">📊</div>
+            <div class="project-links"><a class="plink">⌥</a><a class="plink">↗</a></div>
+          </div>
+          <div class="project-tag-badge">Dashboard</div>
+          <div class="project-name">Analytics Dashboard</div>
+          <p class="project-desc">A responsive data dashboard with live charts, KPI tracking, and filterable reports for real-time business insights.</p>
+          <div class="project-techs">
+            <span class="tech">Next.js</span><span class="tech">TypeScript</span>
+            <span class="tech">Chart.js</span><span class="tech">Tailwind</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="tool">
+          <div class="project-header">
+            <div class="project-icon">🔧</div>
+            <div class="project-links"><a class="plink">⌥</a><a class="plink">↗</a></div>
+          </div>
+          <div class="project-tag-badge">CLI Tool</div>
+          <div class="project-name">Git Workflow Automator</div>
+          <p class="project-desc">A command-line tool that automates repetitive git workflows including branching, versioning, and PR preparation.</p>
+          <div class="project-techs">
+            <span class="tech">Python</span><span class="tech">Click</span><span class="tech">GitPython</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="ai">
+          <div class="project-header">
+            <div class="project-icon">💬</div>
+            <div class="project-links"><a class="plink">⌥</a><a class="plink">↗</a></div>
+          </div>
+          <div class="project-tag-badge">AI Chat</div>
+          <div class="project-name">StudyBot AI</div>
+          <p class="project-desc">An AI tutoring assistant that answers questions, generates practice problems, and tracks student progress across topics.</p>
+          <div class="project-techs">
+            <span class="tech">React</span><span class="tech">OpenAI</span>
+            <span class="tech">Firebase</span><span class="tech">Node.js</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="web">
+          <div class="project-header">
+            <div class="project-icon">🛒</div>
+            <div class="project-links"><a class="plink">⌥</a><a class="plink">↗</a></div>
+          </div>
+          <div class="project-tag-badge">E-Commerce</div>
+          <div class="project-name">ShopFlow Store</div>
+          <p class="project-desc">A full-featured e-commerce platform with product management, Stripe payments, and an admin panel for order tracking.</p>
+          <div class="project-techs">
+            <span class="tech">Next.js</span><span class="tech">Stripe</span>
+            <span class="tech">PostgreSQL</span><span class="tech">Prisma</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Tenuel — Built with passion &amp; caffeine ☕ &nbsp;|&nbsp; All rights reserved</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
