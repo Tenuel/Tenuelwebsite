@@ -135,14 +135,48 @@ function initProjectFilter() {
   });
 }
 
+
 /* ============================================================
-   CONTACT FORM (contact page)
+   CONTACT FORM (EmailJS)
    ============================================================ */
 function initContactForm() {
+  const form = document.getElementById('contact-form');
   const btn = document.getElementById('send-btn');
-  if (!btn) return;
-  btn.addEventListener('click', () => showToast('✅ Message sent! I\'ll get back to you soon.'));
+
+  if (!form || !btn) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      await emailjs.send(
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID',
+        {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          message: document.getElementById('message').value
+        },
+        {
+          publicKey: 'YOUR_PUBLIC_KEY'
+        }
+      );
+
+      showToast('Message sent successfully!');
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      showToast('Message failed to send. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    }
+  });
 }
+
 
 /* ============================================================
    TOAST NOTIFICATION
