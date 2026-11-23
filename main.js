@@ -204,3 +204,31 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilter();
   initContactForm();
 });
+
+/* ============================================================
+   MOBILE MENU (hamburger)  — NEW
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+
+  const close = () => {
+    toggle.classList.remove('open');
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = toggle.classList.toggle('open');
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('click', e => {
+    if (!links.contains(e.target) && !toggle.contains(e.target)) close();
+  });
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) close(); });
+});
