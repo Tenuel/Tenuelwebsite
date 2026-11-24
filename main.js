@@ -156,7 +156,7 @@ function initContactForm() {
         'YOUR_SERVICE_ID',
         'YOUR_TEMPLATE_ID',
         {
-          name: document.getElementById('name').value,
+          name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
           email: document.getElementById('email').value,
           message: document.getElementById('message').value
         },
