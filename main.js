@@ -153,15 +153,15 @@ function initContactForm() {
 
     try {
       await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
+        'service_m0mm2gs',
+        'template_djjrr0m',
         {
           name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
           email: document.getElementById('email').value,
           message: document.getElementById('message').value
         },
         {
-          publicKey: 'YOUR_PUBLIC_KEY'
+          publicKey: 'r9IFXcJvUyWzmJBxH'
         }
       );
 
