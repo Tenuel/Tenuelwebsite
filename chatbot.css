@@ -1,1 +1,99 @@
+/* ============================================================
+   chatbot.css  —  floating chat widget (emerald + tangerine)
+   ============================================================ */
+.cb-fab {
+  position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 900;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: #f28500; color: #3a1d00;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 8px 24px rgba(2,44,34,.45);
+  transition: transform .2s, background .2s;
+}
+.cb-fab:hover { transform: scale(1.08); background: #d97300; color: #fff; }
+.cb-fab svg { width: 28px; height: 28px; }
+.cb-fab .cb-dot {
+  position: absolute; top: 2px; right: 2px; width: 12px; height: 12px;
+  border-radius: 50%; background: #10b981; border: 2px solid #fff;
+}
 
+.cb-panel {
+  position: fixed; right: 1.25rem; bottom: 5.8rem; z-index: 900;
+  width: 370px; max-width: calc(100vw - 2rem);
+  height: 520px; max-height: calc(100vh - 8rem);
+  background: #ffffff; border-radius: 18px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 18px 60px rgba(2,44,34,.5);
+  opacity: 0; transform: translateY(16px) scale(.97); pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  font-family: 'Inter', sans-serif;
+}
+.cb-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.cb-head {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .9rem 1rem; color: #fff;
+  background: linear-gradient(135deg, #047857, #064e3b);
+}
+.cb-avatar {
+  width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+  background: #f28500; color: #3a1d00;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+}
+.cb-title { font-weight: 700; font-size: .95rem; line-height: 1.2; }
+.cb-sub { font-size: .72rem; opacity: .85; display: flex; align-items: center; gap: .35rem; }
+.cb-sub::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
+.cb-close {
+  margin-left: auto; background: transparent; border: none; color: #fff;
+  font-size: 1.5rem; line-height: 1; cursor: pointer; opacity: .85; padding: .2rem .45rem;
+}
+.cb-close:hover { opacity: 1; }
+
+.cb-msgs {
+  flex: 1; overflow-y: auto; padding: 1rem;
+  background: #f3fbf7; display: flex; flex-direction: column; gap: .6rem;
+}
+.cb-msg {
+  max-width: 84%; padding: .6rem .85rem; border-radius: 14px;
+  font-size: .88rem; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
+  animation: cbIn .25s ease both;
+}
+.cb-msg.bot { align-self: flex-start; background: #ffffff; color: #064e3b; border: 1px solid rgba(4,120,87,.18); border-bottom-left-radius: 4px; }
+.cb-msg.user { align-self: flex-end; background: #047857; color: #ffffff; border-bottom-right-radius: 4px; }
+.cb-msg.err { align-self: flex-start; background: #fff4e5; color: #7a3d00; border: 1px solid #f28500; }
+@keyframes cbIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.cb-typing { display: flex; gap: 4px; align-items: center; padding: .75rem .9rem; }
+.cb-typing span { width: 7px; height: 7px; border-radius: 50%; background: #047857; opacity: .35; animation: cbBlink 1.2s infinite; }
+.cb-typing span:nth-child(2) { animation-delay: .2s; }
+.cb-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes cbBlink { 0%,100% { opacity: .25; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.1); } }
+
+.cb-chips { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0 1rem .7rem; background: #f3fbf7; }
+.cb-chip {
+  font-size: .75rem; padding: .35rem .7rem; border-radius: 99px; cursor: pointer;
+  background: #fff; color: #047857; border: 1px solid rgba(4,120,87,.35);
+  font-family: inherit; transition: all .2s;
+}
+.cb-chip:hover { background: #047857; color: #fff; }
+
+.cb-form { display: flex; gap: .5rem; padding: .75rem; background: #fff; border-top: 1px solid rgba(4,120,87,.15); }
+.cb-input {
+  flex: 1; border: 1px solid rgba(4,120,87,.3); border-radius: 10px;
+  padding: .6rem .8rem; font-size: .88rem; font-family: inherit;
+  color: #064e3b; background: #f9fdfb; outline: none;
+}
+.cb-input:focus { border-color: #047857; background: #fff; }
+.cb-send {
+  border: none; border-radius: 10px; padding: 0 1rem; cursor: pointer;
+  background: #f28500; color: #3a1d00; font-weight: 700; font-family: inherit;
+  transition: background .2s;
+}
+.cb-send:hover { background: #d97300; color: #fff; }
+.cb-send:disabled, .cb-input:disabled { opacity: .55; cursor: not-allowed; }
+
+@media (max-width: 520px) {
+  .cb-panel { right: .75rem; left: .75rem; width: auto; max-width: none; bottom: 5.6rem; height: min(540px, calc(100vh - 7rem)); }
+  .cb-fab { right: .9rem; bottom: .9rem; }
+}
