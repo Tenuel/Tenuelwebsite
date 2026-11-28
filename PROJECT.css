@@ -5,16 +5,16 @@
 }
 
 :root {
-  --bg:        #ffffff;
-  --surface:   #ecfdf5;
+  --bg:        #065f46;
+  --surface:   #ffffff;
   --surface2:  #d1fae5;
   --cyan:      #f28500;   /* tangerine (primary) */
   --cyan2:     #d97300;   /* tangerine dark */
-  --text:      #064e3b;
-  --muted:     #3f6b5c;
-  --muted2:    #6b8f80;
-  --border:    rgba(4, 120, 87, 0.18);
-  --border2:   rgba(4, 120, 87, 0.38);
+  --text:      #ffffff;
+  --muted:     rgba(255,255,255,.84);
+  --muted2:    rgba(255,255,255,.62);
+  --border:    rgba(255, 255, 255, 0.20);
+  --border2:   rgba(255, 255, 255, 0.42);
   --emerald:       #047857;
   --emerald-dark:  #064e3b;
   --emerald-light: #10b981;
@@ -34,14 +34,14 @@ body {
 .bg-layer {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(ellipse 55% 55% at 75% 48%, rgba(16,185,129,.12) 0%, transparent 70%),
-    radial-gradient(ellipse 35% 45% at  8% 75%, rgba(4,120,87,.10) 0%, transparent 65%);
+    radial-gradient(ellipse 55% 55% at 75% 48%, rgba(52,211,153,.24) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 45% at  8% 75%, rgba(2,44,34,.38) 0%, transparent 65%);
 }
 .bg-grid {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background-image:
-    linear-gradient(rgba(4,120,87,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(4,120,87,.06) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -576,62 +576,89 @@ footer {
 
 
 /* ============================================================
-   EMERALD + WHITE THEME  (tangerine = primary accent)
+   EMERALD-DOMINANT THEME
+   emerald = base | white = cards & text | tangerine = accent
    ============================================================ */
 
-/* Nav: emerald hover/active, tangerine underline */
-.nav-links a:hover,
-.nav-links a.active { color: var(--emerald); }
-.nav-links a::after { background: var(--cyan); height: 2px; }
+/* ---- Navigation: emerald bar, white links ---- */
+nav { background: rgba(4,120,87,.96); border-bottom: 1px solid rgba(255,255,255,.18); }
+.logo { color: #ffffff; }
 .logo span { background: var(--cyan); color: #ffffff; }
+.nav-links a { color: rgba(255,255,255,.86); }
+.nav-links a:hover,
+.nav-links a.active { color: #ffffff; }
+.nav-links a::after { background: var(--cyan); height: 2px; }
 
-/* Headings & labels in emerald */
-.section-tag { color: var(--emerald); }
-.section-title { color: var(--emerald-dark); }
+/* ---- Headings & labels ---- */
+.section-tag { color: #ffb347; }
+.section-title { color: #ffffff; }
+.section-div { background: var(--cyan); }
+.skill-label, .tl-year { color: #ffb347; }
+
+/* ---- White cards on emerald (text flips to dark emerald inside) ---- */
+.stat-card, .project-card, .service-card, .contact-form, .contact-method {
+  --text:   #064e3b;
+  --muted:  #3f6b5c;
+  --muted2: #6b8f80;
+  --border:  rgba(4,120,87,.18);
+  --border2: rgba(4,120,87,.40);
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: 0 8px 28px rgba(2,44,34,.28);
+}
 .stat-num { color: var(--emerald); }
-.skill-tag,
+.service-more { color: var(--emerald); }
 .project-tag-badge { color: var(--emerald); background: rgba(4,120,87,.08); border-color: rgba(4,120,87,.25); }
-.skill-bar-fill { background: linear-gradient(90deg, var(--emerald), var(--emerald-light)); }
-.tl-year, .skill-label, .step-num, .service-more { color: var(--emerald); }
-.tl-dot { border-color: var(--cyan); }
+.tech { background: rgba(4,120,87,.07); color: #3f6b5c; border-color: rgba(4,120,87,.18); }
+.plink { background: #f3fbf7; }
+.form-group input,
+.form-group textarea,
+.form-group select { background: #f3fbf7; }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { background: #ffffff; border-color: var(--emerald); }
 
-/* Buttons: tangerine, dark-emerald text for readability */
+/* ---- Items sitting directly on emerald ---- */
+.skill-tag { color: #ffffff; background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); }
+.skill-bar-bg { background: rgba(255,255,255,.20); }
+.skill-bar-fill { background: linear-gradient(90deg, var(--cyan), #ffb347); }
+.step-num { background: #ffffff; color: var(--emerald); border-color: var(--cyan); }
+.social-btn { color: #ffffff; border-color: rgba(255,255,255,.4); }
+.social-btn:hover { border-color: var(--cyan); color: var(--cyan); background: #ffffff; }
+.filter-btn { color: #ffffff; border-color: rgba(255,255,255,.4); }
+.filter-btn:hover { border-color: #ffffff; color: #ffffff; background: rgba(255,255,255,.12); }
+.filter-btn.active { background: var(--cyan); color: #3a1d00; border-color: var(--cyan); }
+
+/* ---- Buttons: tangerine ---- */
 .btn-cyan,
 .btn-submit { background: var(--cyan); color: #3a1d00; }
 .btn-cyan:hover,
-.btn-submit:hover { background: var(--cyan2); box-shadow: 0 8px 22px rgba(242,133,0,.28); }
-.btn-outline { color: var(--emerald-dark); }
-.btn-outline:hover { border-color: var(--emerald); color: var(--emerald); background: rgba(4,120,87,.06); }
+.btn-submit:hover { background: var(--cyan2); color: #ffffff; box-shadow: 0 8px 22px rgba(0,0,0,.25); }
+.btn-outline { color: #ffffff; border-color: rgba(255,255,255,.6); }
+.btn-outline:hover { background: #ffffff; color: var(--emerald-dark); border-color: #ffffff; }
 
-/* Cards get a soft shadow on white */
-.project-card, .service-card, .stat-card, .contact-form, .contact-method {
-  box-shadow: 0 2px 14px rgba(6,78,59,.06);
-}
-
-/* HOME: emerald hero band with white text */
-#home-page {
-  background: linear-gradient(135deg, #047857 0%, #065f46 55%, #064e3b 100%);
-}
+/* ---- Home hero: flows into the page ---- */
+#home-page { background: transparent; }
 .hero-h1 { color: #ffffff; }
 .hero-h1 .accent { color: #ffa733; }
-.hero-desc { color: rgba(255,255,255,.88); }
-.badge { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); color: #ffffff; }
+.hero-desc { color: rgba(255,255,255,.9); }
+.badge { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.32); color: #ffffff; }
 .underline-bar { background: linear-gradient(90deg, var(--cyan), transparent); }
-.c-card { border-color: rgba(255,255,255,.45); box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+.c-card { border: 3px solid #ffffff; box-shadow: 0 14px 44px rgba(2,44,34,.5); }
 .c-card:hover { border-color: var(--cyan); }
 .scroll-hint { color: rgba(255,255,255,.75); }
 .scroll-hint .arrow { border-right-color: rgba(255,255,255,.75); border-bottom-color: rgba(255,255,255,.75); }
 
-/* Footer: emerald */
-footer {
-  background: var(--emerald-dark);
-  color: rgba(255,255,255,.8);
-  border-top: none;
+/* ---- Footer ---- */
+footer { background: var(--emerald-dark); color: rgba(255,255,255,.8); border-top: 1px solid rgba(255,255,255,.12); }
+
+/* ---- Toast ---- */
+.toast { background: #ffffff; color: var(--emerald-dark); border-color: var(--cyan); box-shadow: 0 8px 24px rgba(2,44,34,.35); }
+
+/* ---- Mobile menu ---- */
+.nav-toggle { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.45); }
+.nav-toggle span { background: #ffffff; }
+@media (max-width: 900px) {
+  .nav-links { background: #064e3b; border-bottom: 1px solid rgba(255,255,255,.18); }
+  .nav-links a { border-bottom: 1px solid rgba(255,255,255,.10); }
 }
-
-/* Toast */
-.toast { background: var(--emerald-dark); color: #ffffff; border-color: var(--emerald); }
-
-/* Mobile menu on white */
-.nav-toggle { background: rgba(4,120,87,.08); border-color: rgba(4,120,87,.35); }
-.nav-toggle span { background: var(--emerald); }
